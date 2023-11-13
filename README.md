@@ -1,5 +1,12 @@
 # :fox_face: Foxgres
 
+**Ветки создавать по шаблону**
+
+```
+frontend/ваша-фича
+backend/ваша-фича
+```
+
 ## Frontend
 
 * React
