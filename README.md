@@ -31,4 +31,11 @@ npm run dev
 * Golang
 * TBA...
 
+Run backend with postgres in docker:
+
+```sh
+make run #run all containers
+make stop #stop all containers
+```
+
 ### Requirements
