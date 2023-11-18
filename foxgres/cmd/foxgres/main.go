@@ -48,12 +48,15 @@ func main() {
 	defer func() { _ = conn.Close(ctx) }()
 
 	userStorage := storage.NewUserStorage(conn)
-	foxgresService := service.NewService(userStorage)
+	fieldStorage := storage.NewFieldStorage(conn)
+	studentStorage := storage.NewStudentStorage(conn)
+	foxgresService := service.NewService(userStorage, fieldStorage, studentStorage)
 	foxgresHandler := handler.NewHandler(foxgresService)
 
 	e := echo.New()
 
 	e.GET("/auth", foxgresHandler.Auth)
+	e.GET("/marks", foxgresHandler.Marks)
 	e.GET("/docs/*", echoSwagger.WrapHandler)
 
 	log.Fatal(e.Start(cfg.ListenAddr))

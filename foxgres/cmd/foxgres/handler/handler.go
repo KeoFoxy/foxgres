@@ -64,3 +64,37 @@ func (h *Handler) Auth(reqCtx echo.Context) error {
 
 	return reqCtx.JSON(http.StatusOK, AccessLevel{AccessLevel: level})
 }
+
+// Marks godoc
+//
+//		@Summary		get student marks
+//		@Description	Получение оценок студента
+//	 @Tags students
+//		@Accept			json
+//		@Produce		json
+//		@Param			student_id query string true "Идентификатор студента"
+//		@Success		200 {object} Marks
+//		@Failure		400	{object} ResponseErr
+//		@Failure		500	{object} ResponseErr
+//		@Router			/marks [get]
+func (h *Handler) Marks(reqCtx echo.Context) error {
+	studentID := reqCtx.QueryParam("student_id")
+	if studentID == "" {
+		return reqCtx.JSON(http.StatusBadRequest, ResponseErr{Message: "empty student_id"})
+	}
+	loginNumber, err := strconv.Atoi(studentID)
+	if err != nil {
+		log.Errorf("can't convert student_id: %v", err.Error())
+		return reqCtx.JSON(http.StatusInternalServerError, ResponseErr{Message: "internal error"})
+	}
+	marks, err := h.service.GetStudentMarks(reqCtx.Request().Context(), loginNumber)
+	if err != nil {
+		log.Errorf("can't find marks: %v", err.Error())
+		if errors.Is(err, pgx.ErrNoRows) {
+			return reqCtx.JSON(http.StatusUnauthorized, ResponseErr{Message: "marks not found"})
+		}
+		return reqCtx.JSON(http.StatusInternalServerError, ResponseErr{Message: "internal error"})
+	}
+
+	return reqCtx.JSON(http.StatusOK, domainMarksToResponse(marks))
+}
