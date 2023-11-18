@@ -8,13 +8,22 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/labstack/echo/v4"
+	echoSwagger "github.com/swaggo/echo-swagger"
 
+	_ "foxgres/cmd/foxgres/docs"
 	"foxgres/cmd/foxgres/handler"
 	"foxgres/internal/config"
 	"foxgres/internal/service"
 	"foxgres/internal/storage"
 )
 
+//	@title			foxgres API
+//	@version		0.1.0
+//	@description	Ориокс здорового человека
+
+//	@host		localhost:8080
+//
+// nolint:funlen
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -45,7 +54,7 @@ func main() {
 	e := echo.New()
 
 	e.GET("/auth", foxgresHandler.Auth)
+	e.GET("/docs/*", echoSwagger.WrapHandler)
 
 	log.Fatal(e.Start(cfg.ListenAddr))
-
 }

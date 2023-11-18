@@ -22,6 +22,20 @@ type handler struct {
 	service service.Service
 }
 
+// Auth godoc
+//
+//		@Summary		authentication
+//		@Description	Поиск пользователя в таблице users
+//	 @Tags authentication
+//		@Accept			json
+//		@Produce		json
+//		@Param			login header string true "Логин"
+//		@Param			password header string true "Пароль"
+//		@Success		200 {object} AccessLevel
+//		@Failure		400	{object} ResponseErr
+//		@Failure		401	{object} ResponseErr
+//		@Failure		500	{object} ResponseErr
+//		@Router			/auth [get]
 func (h *handler) Auth(reqCtx echo.Context) error {
 	login := reqCtx.Request().Header.Get("login")
 	if login == "" {

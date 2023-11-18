@@ -38,4 +38,6 @@ make run #run all containers
 make stop #stop all containers
 ```
 
+Swagger available on `http://localhost:8080/docs/`
+
 ### Requirements
