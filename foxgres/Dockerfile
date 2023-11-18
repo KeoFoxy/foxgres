@@ -3,13 +3,13 @@ FROM golang:alpine AS build
 WORKDIR /app
 
 ENV GO111MODULE=on
-COPY go.mod go.sum ./
+COPY foxgres/go.mod foxgres/go.sum ./
 RUN go mod download
 
-COPY ./ ./
-RUN go build -o main cmd/main.go
+COPY /foxgres/ ./
+RUN go build -o main cmd/foxgres/main.go
 
-EXPOSE 80
+EXPOSE 8080
 
 FROM scratch
 

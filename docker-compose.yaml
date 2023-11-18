@@ -1,18 +1,18 @@
 version: "3"
 
 services:
-#  backend:
-#    image: backend:1
-#    ports:
-#      - 80:80
-#    environment:
-#      PG_NAME: data
-#      PG_USER: admin
-#      PG_PASSWORD: admin
-#      PG_HOST: db
-#    depends_on:
-#      db:
-#        condition: service_healthy
+  backend:
+    image: backend:1
+    ports:
+      - 8080:8080
+    environment:
+      PG_NAME: foxgres
+      PG_USER: admin
+      PG_PASSWORD: admin
+      PG_HOST: db
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:14
