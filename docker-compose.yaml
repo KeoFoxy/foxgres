@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+#  backend:
+#    image: backend:1
+#    ports:
+#      - 80:80
+#    environment:
+#      PG_NAME: data
+#      PG_USER: admin
+#      PG_PASSWORD: admin
+#      PG_HOST: db
+#    depends_on:
+#      db:
+#        condition: service_healthy
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: foxgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-U", "admin" ]
+    ports:
+      - 5432:5432
+
+  migrate:
+    image: migrate:1
+    environment:
+      PGDATABASE: foxgres
+      PGUSER: admin
+      PGPASSWORD: admin
+      PGHOST: db
+      PGPORT: 5432
+    depends_on:
+      db:
+        condition: service_healthy
