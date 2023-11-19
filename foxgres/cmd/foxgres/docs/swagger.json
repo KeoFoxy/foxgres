@@ -64,6 +64,50 @@
                     }
                 }
             }
+        },
+        "/marks": {
+            "get": {
+                "description": "Получение оценок студента",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "students"
+                ],
+                "summary": "get student marks",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Идентификатор студента",
+                        "name": "student_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Marks"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseErr"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseErr"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -75,10 +119,41 @@
                 }
             }
         },
+        "Marks": {
+            "type": "object",
+            "properties": {
+                "marks": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "integer"
+                    }
+                },
+                "student": {
+                    "$ref": "#/definitions/Student"
+                }
+            }
+        },
         "ResponseErr": {
             "type": "object",
             "properties": {
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "Student": {
+            "type": "object",
+            "properties": {
+                "group_number": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "patronymic": {
+                    "type": "string"
+                },
+                "surname": {
                     "type": "string"
                 }
             }

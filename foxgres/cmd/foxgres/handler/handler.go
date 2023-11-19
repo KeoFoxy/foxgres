@@ -12,13 +12,13 @@ import (
 	"foxgres/internal/service"
 )
 
-func NewHandler(s service.Service) *handler {
-	return &handler{
+func NewHandler(s service.Service) *Handler {
+	return &Handler{
 		service: s,
 	}
 }
 
-type handler struct {
+type Handler struct {
 	service service.Service
 }
 
@@ -36,14 +36,14 @@ type handler struct {
 //		@Failure		401	{object} ResponseErr
 //		@Failure		500	{object} ResponseErr
 //		@Router			/auth [get]
-func (h *handler) Auth(reqCtx echo.Context) error {
+func (h *Handler) Auth(reqCtx echo.Context) error {
 	login := reqCtx.Request().Header.Get("login")
 	if login == "" {
-		return reqCtx.String(http.StatusBadRequest, "login is empty")
+		return reqCtx.JSON(http.StatusBadRequest, ResponseErr{Message: "login is empty"})
 	}
 	pass := reqCtx.Request().Header.Get("password")
 	if pass == "" {
-		return reqCtx.String(http.StatusBadRequest, "password is empty")
+		return reqCtx.JSON(http.StatusBadRequest, ResponseErr{Message: "password is empty"})
 	}
 
 	log.Printf("start auth handle with login: %v, pass: %v", login, pass)
@@ -51,16 +51,50 @@ func (h *handler) Auth(reqCtx echo.Context) error {
 	loginNumber, err := strconv.Atoi(login)
 	if err != nil {
 		log.Errorf("can't convert login: %v", err.Error())
-		return reqCtx.String(http.StatusInternalServerError, "internal error")
+		return reqCtx.JSON(http.StatusInternalServerError, ResponseErr{Message: "internal error"})
 	}
 	level, err := h.service.FindUser(reqCtx.Request().Context(), loginNumber, pass)
 	if err != nil {
 		log.Errorf("can't find user: %v", err.Error())
 		if errors.Is(err, pgx.ErrNoRows) {
-			return reqCtx.String(http.StatusUnauthorized, "user not found")
+			return reqCtx.JSON(http.StatusUnauthorized, ResponseErr{Message: "user not found"})
 		}
-		return reqCtx.String(http.StatusInternalServerError, "internal error")
+		return reqCtx.JSON(http.StatusInternalServerError, ResponseErr{Message: "internal error"})
 	}
 
 	return reqCtx.JSON(http.StatusOK, AccessLevel{AccessLevel: level})
+}
+
+// Marks godoc
+//
+//		@Summary		get student marks
+//		@Description	Получение оценок студента
+//	 @Tags students
+//		@Accept			json
+//		@Produce		json
+//		@Param			student_id query string true "Идентификатор студента"
+//		@Success		200 {object} Marks
+//		@Failure		400	{object} ResponseErr
+//		@Failure		500	{object} ResponseErr
+//		@Router			/marks [get]
+func (h *Handler) Marks(reqCtx echo.Context) error {
+	studentID := reqCtx.QueryParam("student_id")
+	if studentID == "" {
+		return reqCtx.JSON(http.StatusBadRequest, ResponseErr{Message: "empty student_id"})
+	}
+	loginNumber, err := strconv.Atoi(studentID)
+	if err != nil {
+		log.Errorf("can't convert student_id: %v", err.Error())
+		return reqCtx.JSON(http.StatusInternalServerError, ResponseErr{Message: "internal error"})
+	}
+	marks, err := h.service.GetStudentMarks(reqCtx.Request().Context(), loginNumber)
+	if err != nil {
+		log.Errorf("can't find marks: %v", err.Error())
+		if errors.Is(err, pgx.ErrNoRows) {
+			return reqCtx.JSON(http.StatusUnauthorized, ResponseErr{Message: "marks not found"})
+		}
+		return reqCtx.JSON(http.StatusInternalServerError, ResponseErr{Message: "internal error"})
+	}
+
+	return reqCtx.JSON(http.StatusOK, domainMarksToResponse(marks))
 }
