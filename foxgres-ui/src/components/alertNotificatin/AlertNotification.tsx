@@ -1,18 +1,16 @@
-import { FC } from 'react';
-import { Alert, Snackbar, styled } from '@mui/material';
-
+import { FC } from "react";
+import { Alert, Snackbar, styled } from "@mui/material";
 
 interface AlertProps {
   open: boolean;
-  severity: 'success' | 'error';
+  severity: "success" | "error";
   alertMessage?: string;
   onClose: () => void;
 }
 
-const StyledMsg = styled('p')`
+const StyledMsg = styled("p")`
   font-size: 14px;
   font-weight: bold;
-  
 `;
 
 const AlertNotification: FC<AlertProps> = ({
@@ -26,15 +24,10 @@ const AlertNotification: FC<AlertProps> = ({
       open={open}
       autoHideDuration={10000}
       onClose={onClose}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
     >
-      <Alert
-        onClose={onClose}
-        severity={severity}
-      >
-        <StyledMsg>
-          {alertMessage}
-        </StyledMsg>
+      <Alert onClose={onClose} severity={severity}>
+        <StyledMsg>{alertMessage}</StyledMsg>
       </Alert>
     </Snackbar>
   );
