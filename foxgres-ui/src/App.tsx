@@ -1,33 +1,19 @@
-import { Routes, Route } from 'react-router-dom';
-import {
-  Login,
-  Home,
-  Profile,
-  ErrorPage,
-} from './pages';
-
-import {
-  Layout,
-} from './components';
+import { Routes, Route } from "react-router-dom";
+import { Login, Home, ErrorPage } from "./pages";
 
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Layout />}>
-        {/* Login Page */}
-        <Route path='login' element={<Login />} />
+      {/* Login Page */}
+      <Route path="/" element={<Login />} />
 
-        {/* Main Pages */}
-        {/* <Route element={<RequireAuth />}>   */}
-          <Route path='home' element={<Home />} />
-          <Route path='profile' element={<Profile />} />
-        {/* </Route> */}
+      {/* Main Pages */}
+      <Route path="home" element={<Home />} />
 
-        {/* Error route */}
-        <Route path='*' element={<ErrorPage />}/>
-      </Route>
+      {/* Error route */}
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;
