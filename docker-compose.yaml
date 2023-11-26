@@ -36,3 +36,24 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    image: frontend:1
+    ports:
+      - 5173:5173
+    depends_on:
+      db:
+        condition: service_healthy
