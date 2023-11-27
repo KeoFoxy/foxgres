@@ -8,6 +8,7 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
 
 	_ "foxgres/cmd/foxgres/docs"
@@ -54,6 +55,8 @@ func main() {
 	foxgresHandler := handler.NewHandler(foxgresService)
 
 	e := echo.New()
+
+	e.Use(middleware.CORS())
 
 	e.GET("/auth", foxgresHandler.Auth)
 	e.GET("/marks", foxgresHandler.Marks)
