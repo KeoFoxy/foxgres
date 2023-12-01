@@ -12,7 +12,7 @@ import {
 import { styled } from "@mui/material/styles";
 
 import { fetchLogin, LoginProps } from "../utils/utils";
-import AlertNotification from "../components/alertNotificatin/AlertNotification";
+import AlertNotification from "../components/alertNotification/AlertNotification";
 
 const LoginCard = styled(Card)({
   width: 500,

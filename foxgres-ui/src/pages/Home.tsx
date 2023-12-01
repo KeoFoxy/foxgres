@@ -15,7 +15,9 @@ interface PersonProps {
 }
 
 const StyledHome = styled("div")`
+  border-radius: 15px;
   padding: 20px;
+  box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.1);
 `;
 
 export const Home: FC = () => {
@@ -56,7 +58,7 @@ export const Home: FC = () => {
     <StyledHome>
       {userId && (
         <div>
-          <h1>{`${studentInfo?.surname} ${studentInfo?.name} ${studentInfo?.patronymic}`}</h1>
+          <h1 style={{ color: '#444343' }}>{`${studentInfo?.surname} ${studentInfo?.name} ${studentInfo?.patronymic}`}</h1>
         </div>
       )}
       <TextField
