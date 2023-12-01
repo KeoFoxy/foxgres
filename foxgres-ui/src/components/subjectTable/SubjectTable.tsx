@@ -8,26 +8,12 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import { getColorForMark } from './helper'; 
 
 interface TableProps {
   disciplines: Array<string>;
   marks: Record<string, number>;
 }
-
-const getColorForMark = (mark: number) => {
-  switch (mark) {
-    case 5:
-      return "#29cf00";
-    case 4:
-      return "#C9FFA0";
-    case 3:
-      return "#feffa3";
-    case 2:
-      return "#ffdca6";
-    default:
-      return "#ff0800";
-  }
-};
 
 const SubjectTable: FC<TableProps> = ({ disciplines, marks }) => {
   return (
@@ -46,7 +32,7 @@ const SubjectTable: FC<TableProps> = ({ disciplines, marks }) => {
                 {discipline}
               </TableCell>
               <TableCell
-                align="right"
+                align="center"
                 sx={{
                   backgroundColor: getColorForMark(marks[discipline]),
                   fontWeight: "bold",
