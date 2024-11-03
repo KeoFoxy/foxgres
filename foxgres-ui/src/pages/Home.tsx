@@ -1,7 +1,7 @@
 import { FC, ChangeEvent, useEffect, useState } from "react";
 import { TextField, styled } from "@mui/material";
 import SubjectTable from "../components/subjectTable/SubjectTable";
-import { fetchGrades } from "../utils/utils";
+import { fetchGrades } from "src/api/fetchGrades";
 
 interface Marks {
   [discipline: string]: number;

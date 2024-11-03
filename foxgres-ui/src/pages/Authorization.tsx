@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-import { fetchLogin, LoginProps } from "../utils/utils";
+import { fetchLogin, LoginProps } from "src/api/auth";
 import AlertNotification from "../components/alertNotification/AlertNotification";
 
 const LoginCard = styled(Card)({
@@ -58,9 +58,9 @@ export const Login: FC = () => {
     navigate("/home");
   };
 
-  const onError = (error: string, details?: any) => {
+  const onError = (error: string, details?) => {
     setIsErrorAuth(true);
-    setErrorMsg(error + " " + details.toString());
+    setErrorMsg(error + " " + details?.toString());
   };
 
   const handleClose = () => {
@@ -89,7 +89,7 @@ export const Login: FC = () => {
               id="email"
               label="Логин"
               name="email"
-              autoComplete="email"
+              autoComplete="new-password"
               autoFocus
               onBlur={(e) => {
                 setLogin(e.target.value);
@@ -104,7 +104,7 @@ export const Login: FC = () => {
               label="Пароль"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               onBlur={(e) => {
                 setPassword(e.target.value);
               }}

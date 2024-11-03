@@ -1,4 +1,4 @@
-export const getColorForMark = (mark: number) => {
+export const getColorForMark = (mark: number = 5) => {
     switch (mark) {
         case 5:
             return "#29cf00";

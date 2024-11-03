@@ -8,7 +8,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import { getColorForMark } from './helper'; 
+import { getColorForMark } from './utils'; 
 
 interface TableProps {
   disciplines: Array<string>;
