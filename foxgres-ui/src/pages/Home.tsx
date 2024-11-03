@@ -1,7 +1,7 @@
 import { FC, ChangeEvent, useEffect, useState } from "react";
 import { TextField, styled } from "@mui/material";
 import SubjectTable from "../components/subjectTable/SubjectTable";
-import { fetchGrades } from "src/api/fetchGrades";
+import { fetchGrades } from "../api";
 
 interface Marks {
   [discipline: string]: number;
@@ -65,7 +65,6 @@ export const Home: FC = () => {
         label="Поиск дисциплины"
         variant="outlined"
         fullWidth
-        margin="normal"
         value={searchTerm}
         onChange={handleSearch}
       />

@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "src/config";
+import { API_BASE_URL } from "../config";
 
 export const fetchGrades = async (studentId: string) => {
   try {

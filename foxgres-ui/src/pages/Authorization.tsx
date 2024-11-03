@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-import { fetchLogin, LoginProps } from "src/api/auth";
+import { fetchLogin, LoginProps } from "../api";
 import AlertNotification from "../components/alertNotification/AlertNotification";
 
 const LoginCard = styled(Card)({
