@@ -72,12 +72,18 @@ frontend/your-feature
 backend/your-feature
 ```
 
+## Run project 
+
+
 loginform: http://localhost:5173
 
 ```
 login: studentID
 password: studentbirthday
+```
 
-
+Example:
+```
 login: 856390
 password: 2002-04-24
+```
