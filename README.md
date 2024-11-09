@@ -71,3 +71,13 @@ pgAdmin available on `http://localhost:5050`
 frontend/your-feature
 backend/your-feature
 ```
+
+loginform: http://localhost:5173
+
+```
+login: studentID
+password: studentbirthday
+
+
+login: 856390
+password: 2002-04-24
